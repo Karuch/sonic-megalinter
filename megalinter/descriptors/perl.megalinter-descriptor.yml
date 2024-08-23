@@ -1,0 +1,36 @@
+descriptor_id: PERL
+descriptor_type: language
+file_extensions:
+  - ".pl"
+  - ".pm"
+  - ".t"
+  - ""
+file_contains_regex_extensions:
+  - ""
+file_contains_regex:
+  - "#!/usr/bin/env perl"
+  - "#!/usr/bin/perl"
+install:
+  apk:
+    - perl
+    - perl-dev
+linters:
+  # PERL CRITIC
+  - linter_name: perlcritic
+    linter_url: https://metacpan.org/pod/Perl::Critic
+    linter_repo: https://github.com/Perl-Critic/Perl-Critic
+    linter_rules_url: https://metacpan.org/pod/Perl::Critic#THE-POLICIES
+    linter_banner_image_url: https://chrisdolan.net/madmongers/images/perl-critic-logo.gif
+    linter_rules_configuration_url: https://metacpan.org/pod/Perl::Critic#CONFIGURATION
+    linter_rules_inline_disable_url: https://metacpan.org/pod/Perl::Critic#BENDING-THE-RULES
+    cli_help_arg_name: "--help"
+    cli_lint_errors_count: regex_count
+    cli_lint_errors_regex: "\\(Severity: [0-9]+\\)"
+    help_command_return_code: 2
+    examples:
+      - "perlcritic myfile.pl"
+    install:
+      dockerfile:
+        - |
+          RUN curl -fsSL https://raw.githubusercontent.com/skaji/cpm/main/cpm | perl - install -g --show-build-log-on-failure --without-build --without-test --without-runtime Perl::Critic \
+              && rm -rf /root/.perl-cpm

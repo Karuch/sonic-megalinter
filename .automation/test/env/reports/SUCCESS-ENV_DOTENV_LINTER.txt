@@ -1,0 +1,7 @@
+Results of dotenv-linter linter (version 2.2.1)
+See documentation on https://megalinter.io/descriptors/env_dotenv_linter/
+-----------------------------------------------
+
+[SUCCESS] .automation/test/env/env_good_1.env
+    
+

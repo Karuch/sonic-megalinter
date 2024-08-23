@@ -1,0 +1,52 @@
+---
+name: "Test mega-linter-runner"
+on: 
+  push:
+    paths-ignore:
+      - .github/CONTRIBUTING.md
+      - CHANGELOG.md
+      - README.md
+      - .github/workflows/slash-command-dispatch.yml
+      - .github/workflows/help-command.yml
+      - .github/workflows/build-command.yml
+  pull_request:
+    paths-ignore:
+      - .github/CONTRIBUTING.md
+      - CHANGELOG.md
+      - README.md
+      - .github/workflows/slash-command-dispatch.yml
+      - .github/workflows/help-command.yml
+      - .github/workflows/build-command.yml
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+
+  build:
+    name: Test MegaLinter runner
+    # Set the agent to run on
+    runs-on: ubuntu-latest
+    # Prevent duplicate run from happening when a forked push is committed
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
+    timeout-minutes: 60
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4.0.3
+        with:
+          node-version: "18.x"
+      - name: Install dependencies
+        run: cd mega-linter-runner && yarn install --frozen-lockfile && npm link
+
+      # Free disk space
+      - name: Free Disk space
+        shell: bash
+        run: |
+          sudo rm -rf /usr/local/lib/android  # will release about 10 GB if you don't need Android
+          sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
+      # Run mocha tests
+      - name: Run tests
+        run: cd mega-linter-runner && npm run test

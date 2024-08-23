@@ -1,0 +1,49 @@
+descriptor_id: CLOUDFORMATION
+descriptor_type: tooling_format
+descriptor_flavors:
+  - cupcake
+  - security
+file_extensions:
+  - ".yml"
+  - ".yaml"
+  - ".json"
+file_contains_regex:
+  - "AWSTemplateFormatVersion"
+  - "(AWS|Alexa|Custom)::"
+linters:
+  # AWS CloudFormation Lint
+  - linter_name: cfn-lint
+    can_output_sarif: true
+    linter_url: https://github.com/aws-cloudformation/cfn-lint
+    linter_repo: https://github.com/aws-cloudformation/cfn-lint
+    linter_rules_url: https://github.com/aws-cloudformation/cfn-lint/blob/main/docs/rules.md
+    linter_banner_image_url: https://raw.githubusercontent.com/aws-cloudformation/cfn-lint/main/logo.png
+    linter_icon_png_url: https://raw.githubusercontent.com/oxsecurity/megalinter/main/docs/assets/icons/linters/cfn-lint.png
+    config_file_name: .cfnlintrc.yml
+    cli_config_arg_name: "--config-file"
+    cli_lint_mode: list_of_files
+    cli_sarif_args:
+      - --format
+      - sarif
+      - --output-file
+      - "{{SARIF_OUTPUT_FILE}}"
+    examples:
+      - "cfn-lint myfile.yml"
+      - "cfn-lint --config-file .cfnlintrc.yml myfile.yml"
+    install:
+      pip:
+        - cfn-lint[sarif]
+    ide:
+      atom:
+        - name: atom-cfn-lint
+          url: https://atom.io/packages/atom-cfn-lint
+      idea:
+        - name: cfn-lint
+          url: https://plugins.jetbrains.com/plugin/10973-cfn-lint
+          id: io.binx.cfnlint.plugin
+      sublime:
+        - name: SublimeLinter CloudFormation
+          url: https://packagecontrol.io/packages/SublimeLinter-contrib-cloudformation
+      vscode:
+        - name: vscode-cfn-lint
+          url: https://marketplace.visualstudio.com/items?itemName=kddejong.vscode-cfn-lint

@@ -1,0 +1,34 @@
+# Configuration file for MegaLinter
+# See all available variables at https://megalinter.io/configuration/ and in linters documentation
+
+APPLY_FIXES: all # all, none, or list of linter keys
+# ENABLE
+ENABLE_LINTERS: # If you use ENABLE_LINTERS variable, all other linters will be disabled by default
+  - MARKDOWN_MARKDOWNLINT
+DISABLE:
+  - COPYPASTE # Comment to disable checks of excessive copy-pastes
+  - SPELL # Comment to disable checks of spelling mistakes # - SPELL # Uncomment to disable checks of spelling mistakes
+SHOW_ELAPSED_TIME: true
+FILEIO_REPORTER: false
+PRE_COMMANDS:
+  - command: npm install java-caller -g
+    cwd: "root"
+  - command: echo "pre-test command has been called"
+    cwd: "workspace"
+  - command: pip install flake8-cognitive-complexity
+    venv: flake8
+POST_COMMANDS:
+  - command: npm run test
+    cwd: "workspace"
+MARKDOWN_PRE_COMMANDS:
+  - command: echo 'descriptor pre-command has been run'
+    cwd: "root"
+MARKDOWN_POST_COMMANDS:
+  - command: echo 'descriptor post-command has been run'
+    cwd: "root"
+MARKDOWN_MARKDOWNLINT_PRE_COMMANDS:
+  - command: echo 'linter pre-command has been run'
+    cwd: "root"
+MARKDOWN_MARKDOWNLINT_POST_COMMANDS:
+  - command: echo 'linter post-command has been run'
+    cwd: "root"

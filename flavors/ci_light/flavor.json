@@ -1,0 +1,29 @@
+{
+    "descriptors": [
+        "BASH"
+    ],
+    "label": "Optimized for CI items (Dockerfile, Jenkinsfile, JSON/YAML schemas,XML",
+    "linters": [
+        "BASH_SHELLCHECK",
+        "BASH_SHFMT",
+        "COPYPASTE_JSCPD",
+        "DOCKERFILE_HADOLINT",
+        "ENV_DOTENV_LINTER",
+        "GROOVY_NPM_GROOVY_LINT",
+        "JSON_JSONLINT",
+        "JSON_V8R",
+        "JSON_PRETTIER",
+        "REPOSITORY_GIT_DIFF",
+        "REPOSITORY_GITLEAKS",
+        "REPOSITORY_GRYPE",
+        "REPOSITORY_LS_LINT",
+        "REPOSITORY_SECRETLINT",
+        "REPOSITORY_TRIVY",
+        "REPOSITORY_TRIVY_SBOM",
+        "REPOSITORY_TRUFFLEHOG",
+        "XML_XMLLINT",
+        "YAML_PRETTIER",
+        "YAML_YAMLLINT",
+        "YAML_V8R"
+    ]
+}
